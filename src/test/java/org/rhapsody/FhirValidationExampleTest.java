@@ -1,12 +1,15 @@
 package org.rhapsody;
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.DataFormatException;
 import ca.uhn.fhir.parser.IParser;
+import ca.uhn.fhir.validation.ValidationResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.io.FileNotFoundException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class FhirValidationExampleTest {
     private IParser jsonParser;
@@ -19,33 +22,43 @@ class FhirValidationExampleTest {
     }
 
     @Test
-    void testValidateFHIRResourceJsonSuccess() {
+    void testValidateFHIRResourceJsonSuccess() throws FileNotFoundException {
         String filePath = "src/test/resources/valid/sample.json";
         FhirValidationExample.setJsonParser(jsonParser);
-        assertDoesNotThrow(() -> FhirValidationExample.validateFHIRResource(filePath));
+        ValidationResult validationResult = FhirValidationExample.validateFHIRResource(filePath);
+        assertDoesNotThrow(() -> validationResult);
+        assertTrue(validationResult.isSuccessful());
     }
 
     @Test
-    void testValidateFHIRResourceXmlSuccess() {
+    void testValidateFHIRResourceXmlSuccess() throws FileNotFoundException {
         String filePath = "src/test/resources/valid/sample.xml";
         FhirValidationExample.setXmlParser(xmlParser);
-        assertDoesNotThrow(() -> FhirValidationExample.validateFHIRResource(filePath));
+        ValidationResult validationResult = FhirValidationExample.validateFHIRResource(filePath);
+        assertDoesNotThrow(() -> validationResult);
+        assertTrue(validationResult.isSuccessful());
+    }
+
+    @Test
+    void testValidateFHIRResourceJsonFail() {
+        String filePath = "src/test/resources/invalid/sample.json";
+        FhirValidationExample.setJsonParser(jsonParser);
+
+        assertThrows(DataFormatException.class, () -> FhirValidationExample.validateFHIRResource(filePath));
+    }
+
+    @Test
+    void testValidateFHIRResourceXmlFail() {
+        String filePath = "src/test/resources/invalid/sample.xml";
+        FhirValidationExample.setXmlParser(xmlParser);
+        assertThrows(DataFormatException.class, () -> FhirValidationExample.validateFHIRResource(filePath));
     }
 
     @Test
     void testValidateFHIRResourceUnsupportedFormat() {
         String filePath = "src/test/resources/invalid/sample.txt";
-        assertDoesNotThrow(() -> FhirValidationExample.validateFHIRResource(filePath));
-        // Check the console output for the "Unsupported file format" message
+        assertThrows(DataFormatException.class, () -> FhirValidationExample.validateFHIRResource(filePath));
     }
-
-    @Test
-    void testValidateFHIRResourceParserNotSet() {
-        String filePath = "src/test/resources/valid/sample.json";
-        assertDoesNotThrow(() -> FhirValidationExample.validateFHIRResource(filePath));
-        // Check the console output for the "Parser not set" message
-    }
-
     @Test
     void testSetJsonParser() {
         FhirValidationExample.setJsonParser(jsonParser);

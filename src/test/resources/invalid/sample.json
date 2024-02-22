@@ -1,7 +1,7 @@
 {
   "resourceType": "Observation",
   "id": "example",
-  "status": "invalid_status",  // Invalid status value
+  "status": "invalid_status",
   "code": {
     "coding": [
       {
