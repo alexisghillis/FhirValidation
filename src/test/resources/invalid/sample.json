@@ -1,0 +1,23 @@
+{
+  "resourceType": "Observation",
+  "id": "example",
+  "status": "invalid_status",  // Invalid status value
+  "code": {
+    "coding": [
+      {
+        "system": "http://loinc.org",
+        "code": "29463-7",
+        "display": "Body Weight"
+      }
+    ]
+  },
+  "subject": {
+    "reference": "Patient/example"
+  },
+  "valueQuantity": {
+    "value": 70,
+    "unit": "kg",
+    "system": "http://unitsofmeasure.org",
+    "code": "kg"
+  }
+}
