@@ -1,0 +1,47 @@
+{
+  "resourceType": "Patient",
+  "id": "example",
+  "identifier": [
+    {
+      "system": "http://example.org/patient-ids",
+      "value": "12345"
+    }
+  ],
+  "name": [
+    {
+      "use": "official",
+      "family": "Doe",
+      "given": ["John", "Robert"]
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "555-555-1234",
+      "use": "work"
+    }
+  ],
+  "gender": "male",
+  "birthDate": "1980-05-15",
+  "deceasedBoolean": false,
+  "address": [
+    {
+      "use": "home",
+      "type": "both",
+      "line": ["123 Main St"],
+      "city": "Anytown",
+      "state": "CA",
+      "postalCode": "12345"
+    }
+  ],
+  "maritalStatus": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/v3/MaritalStatus",
+        "code": "M",
+        "display": "Married"
+      }
+    ]
+  },
+  "multipleBirthBoolean": false
+}

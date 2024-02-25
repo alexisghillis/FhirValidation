@@ -1,0 +1,20 @@
+<Patient xmlns="http://hl7.org/fhir">
+    <!-- Missing 'id' attribute -->
+    <identifier>
+        <system value="http://example.com"/>
+        <value value="12345"/>
+    </identifier>
+    <name>
+        <family value="Doe"/>
+        <given value="John"/>
+    </name>
+    <telecom>
+        <!-- Invalid 'use' value -->
+        <use value="invalid_use"/>
+        <system value="phone"/>
+        <value value="555-1234"/>
+    </telecom>
+    <gender value="male"/>
+    <birthDate value="invalid_date_format"/> <!-- Invalid date format -->
+    <!-- Missing 'address' field -->
+</Patient>

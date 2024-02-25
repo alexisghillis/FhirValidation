@@ -17,12 +17,25 @@ public class FhirValidationExample {
     private static IParser xmlParser;
 
     public static void main(String[] args) throws FileNotFoundException {
-        setJsonParser(FhirContext.forR5().newJsonParser());
-        setXmlParser(FhirContext.forR5().newXmlParser());
+        FhirContext fhirContextR5 = FhirContext.forR5();
+        setJsonParser(fhirContextR5.newJsonParser());
+        setXmlParser(fhirContextR5.newXmlParser());
 
-        validateFHIRResource("src/test/resources/valid/sample.json");
+        validateFHIRResource("src/test/resources/valid/sample.json", fhirContextR5);
+        validateFHIRResource("src/test/resources/valid/sample.xml", fhirContextR5);
+        validateFHIRResource("src/test/resources/valid/valid_patient.xml", fhirContextR5);
+        validateFHIRResource("src/test/resources/valid/valid_patient.json", fhirContextR5);
 
-        validateFHIRResource("src/test/resources/valid/sample.xml");
+        FhirContext fhirContextR4 = FhirContext.forR4();
+        setJsonParser(fhirContextR4.newJsonParser());
+        setXmlParser(fhirContextR4.newXmlParser());
+
+        validateFHIRResource("src/test/resources/valid/sample.json", fhirContextR4);
+        validateFHIRResource("src/test/resources/valid/sample.xml", fhirContextR4);
+        validateFHIRResource("src/test/resources/valid/valid_patient.xml", fhirContextR4);
+        validateFHIRResource("src/test/resources/valid/valid_patient.json", fhirContextR4);
+
+
     }
 
     public static void setJsonParser(IParser parser) {
@@ -33,8 +46,8 @@ public class FhirValidationExample {
         xmlParser = parser;
     }
 
-    protected static ValidationResult validateFHIRResource(String filePath) throws FileNotFoundException {
-        FhirContext fhirContext = FhirContext.forR5();
+    protected static ValidationResult validateFHIRResource(String filePath, FhirContext fhirContext) throws FileNotFoundException {
+
         FhirValidator validator = fhirContext.newValidator();
 
         IParser parser;

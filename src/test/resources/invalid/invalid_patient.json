@@ -1,0 +1,24 @@
+{
+  "resourceType": "Patient",
+  "identifier": [
+    {
+      "system": "http://example.com",
+      "value": "12345"
+    }
+  ],
+  "name": [
+    {
+      "family": "Doe",
+      "given": ["John"]
+    }
+  ],
+  "telecom": [
+    {
+      "use": "invalid_use",
+      "system": "phone",
+      "value": "555-1234"
+    }
+  ],
+  "gender": "male",
+  "birthDate": "invalid_date_format"
+}
