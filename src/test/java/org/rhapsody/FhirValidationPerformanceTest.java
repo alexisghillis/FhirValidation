@@ -39,16 +39,21 @@ public class FhirValidationPerformanceTest {
     public void testFhirValidationPerformanceInParallel() throws ExecutionException, InterruptedException {
 
         // Create an ExecutorService with a fixed number of threads
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        ExecutorService executorService = Executors.newWorkStealingPool();
 
         // List to store CompletableFuture for each method
         List<CompletableFuture<ValidationResult>> futures = new ArrayList<>();
 
-        callValidation(executorService, futures, 0);
-        callValidation(executorService, futures, 1);
-        callValidation(executorService, futures, 2);
-        callValidation(executorService, futures, 3);
-        callValidation(executorService, futures, 4);
+        int iterator = 0;
+
+        do {
+            callValidation(executorService, futures, 0);
+            callValidation(executorService, futures, 1);
+            callValidation(executorService, futures, 2);
+            callValidation(executorService, futures, 3);
+            callValidation(executorService, futures, 4);
+            iterator++;
+        }while(iterator < 50);
 
         // Wait for all CompletableFuture tasks to complete
         CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
