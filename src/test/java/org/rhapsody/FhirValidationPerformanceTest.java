@@ -76,7 +76,7 @@ public class FhirValidationPerformanceTest {
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
 
-            System.out.println("Validation Execution Time: " + duration + " ms");
+            System.out.println("Validation Execution Time of file name " + filePathMap.get(pathIndex) + " took " + duration + " ms");
 
             // Return the result for further assertions if needed
             return result;
